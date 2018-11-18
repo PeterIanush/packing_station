@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>setInterval</title>
+    {% if title %}
+    <title>{{title}} - microblog </title>
+    {% else %}
+    <title> Welcome Html </title>
+    {% endif %}
+    <title>Hello Peter</title>
+    <link data-require="bootstrap@*" data-semver="4.1.1" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.js"></script>
+  </head>
+
+<style>
+  * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #ffd54f;
+}
+.table {
+  color: green;
+  background: black;
+}
+.container {
+  color: #333;
+  text-align: center;
+}
+
+h1 {
+  font-weight: normal;
+}
+
+li {
+  display: inline-block;
+  font-size: 1.5em;
+  list-style-type: none;
+  padding: 1em;
+  text-transform: uppercase;
+}
+
+li span {
+  display: block;
+  font-size: 4.5rem;
+}
+</style>
+
+
+
+<body>
+<table class="table table-striped">
+  
+  <tr>
+      <th>IP</th>
+      <th>Line</th>
+      <th>Event Time</th>
+      <th>Time Zone</th>
+      <th>Event</th>
+  </tr>
+    {% for t in timeturns %}
+  <tr>
+      <td>{{t.ip}}</td>
+      <td>{{t.line}}</td>
+      <td>{{(datetime.utcfromtimestamp(int(t.eventTime))+timedelta).strftime('%Y-%m-%d %H:%M:%S')}}</td>
+      <td>{{('GMT+%s'%timedelta)}}</td>
+      <td>{{t.event}}</td>
+  </tr>
+    {% endfor %}
+</table>
+<p id = "timer"></p>
+<div class="container">
+  <h1 id="head"></h1>
+  <ul>
+
+    <li><span id="hours"></span>Hours</li>
+    <li><span id="minutes"></span>Minutes</li>
+    <li><span id="seconds"></span>Seconds</li>
+  </ul>
+
+</div>
+
+
+  <script>
+
+   $( document ).ready(function(){
+       console.log('loaded');
+       var counter={{speedRound}};
+       var second = 60,
+            minute = second,
+            hour = minute * 60,
+            day = hour * 24;
+
+       setInterval(function () {
+           if (counter <= 0){
+               location.reload(true);
+           }else{
+               document.getElementById('hours').innerText = Math.floor((counter % day)/hour);
+               document.getElementById('minutes').innerText = Math.floor((counter % hour)/minute);
+               document.getElementById('seconds').innerText = counter % second;
+               counter--;
+           }
+
+       },1000);
+
+       function nf(number, len) {
+
+           if(!number){
+               return 'Bla';
+           }
+
+           var n = '0'.repeat(len) + number;
+           return n.substring(n.length-len,n.length);
+
+       }
+
+   });
+
+
+
+  </script>
+
+
+
+</body>
+
+</html>

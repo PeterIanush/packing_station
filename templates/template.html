@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% if title %}
+    <title>{{title}} - microblog </title>
+    {% else %}
+    <title> Welcome Html </title>
+    {% endif %}
+    <title>Hello Peter</title>
+    <link data-require="bootstrap@*" data-semver="4.1.1" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
+</head>
+<body>
+<table class="table table-striped">
+  <tr>
+      <th>IP</th>
+      <th>Line</th>
+      <th>Event Time</th>
+      <th>Time Zone</th>
+      <th>Event</th>
+  </tr>
+    {% for t in timeturns %}
+  <tr>
+      <td>{{t.ip}}</td>
+      <td>{{t.line}}</td>
+      <td>{{(datetime.utcfromtimestamp(int(t.eventTime))+timedelta).strftime('%Y-%m-%d %H:%M:%S')}}</td>
+      <td>{{('GMT+%s'%timedelta)}}</td>
+      <td>{{t.event}}</td>
+  </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

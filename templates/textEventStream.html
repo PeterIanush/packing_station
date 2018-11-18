@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.js"></script>
+
+</head>
+<style>
+  * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #ffd54f;
+}
+
+.container {
+  color: #333;
+  text-align: center;
+}
+
+h1 {
+  font-weight: normal;
+}
+
+li {
+  display: inline-block;
+  font-size: 1.5em;
+  list-style-type: none;
+  padding: 1em;
+  text-transform: uppercase;
+}
+
+li span {
+  display: block;
+  font-size: 4.5rem;
+}
+</style>
+<body>
+<p id="timer"><>
+<div class="container">
+  <h1 id="head"></h1>
+  <ul>
+
+    <li><span id="hours"></span>Hours</li>
+    <li><span id="minutes"></span>Minutes</li>
+    <li><span id="seconds"></span>Seconds</li>
+  </ul>
+
+</div>
+
+<script>
+    var second = 1000,
+      minute = second * 60,
+      hour = minute * 60,
+      day = hour * 24;
+
+    var countDown = new Date('Sep 30, 2019 00:00:00').getTime(),
+    x = setInterval(function() {
+
+      var now = new Date().getTime(),
+          distance = countDown - now;
+
+      document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour)),
+      document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute)),
+      document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
+
+    }, second);
+
+    refresh = setInterval(function () {
+      $.get('/lastcw', function (data, status) {
+          roundStart = data.startTime;
+          roundEnd = data.endTime;
+          console.log(roundEnd - roundStart)
+      });
+    }, second*15);
+</script>
+
+
+</body>
+</html>
